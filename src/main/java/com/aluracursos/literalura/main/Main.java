@@ -36,6 +36,7 @@ public class Main {
                     1 - Agregar un libro a favoritos
                     2 - Listar los libros guardados como favoritos
                     3 - Listar autores de libros favoritos
+                    4 - Filtrar libros por idioma
 
                     0 - Salir
                     ****************************
@@ -59,6 +60,9 @@ public class Main {
                     break;
                 case 3:
                     listarAutoresConLibros();
+                    break;
+                case 4:
+                   listarLibrosPorIdioma();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -181,5 +185,26 @@ public class Main {
         }
     }
 
+    private void listarLibrosPorIdioma() {
+        System.out.println("""
+                Ingrese el idioma para buscar los libros
+                es - español
+                en - ingles
+                fr - frances
+                pt - portugues
+                """);
 
+
+        String idioma = sc.nextLine();
+
+        // Llamar al servicio para obtener los libros por idioma
+        List<Libro> libros = libroService.listarLibrosPorIdioma(idioma);
+
+        if (libros.isEmpty()) {
+            System.out.println("No se encontraron libros en el idioma especificado.");
+        } else {
+            System.out.println("Libros encontrados en el idioma " + idioma + ":");
+            libros.forEach(libro -> System.out.println(libro));
+        }
+    }
 }
