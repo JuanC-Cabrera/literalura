@@ -37,6 +37,7 @@ public class Main {
                     2 - Listar los libros guardados como favoritos
                     3 - Listar autores de libros favoritos
                     4 - Filtrar libros por idioma
+                    5 - Listar autores vivos por determinado año
 
                     0 - Salir
                     ****************************
@@ -63,6 +64,9 @@ public class Main {
                     break;
                 case 4:
                    listarLibrosPorIdioma();
+                    break;
+                case 5:
+                    listarAutoresVivosEnAnio();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -204,7 +208,30 @@ public class Main {
             System.out.println("No se encontraron libros en el idioma especificado.");
         } else {
             System.out.println("Libros encontrados en el idioma " + idioma + ":");
-            libros.forEach(libro -> System.out.println(libro));
+            libros.forEach(System.out::println);
+        }
+    }
+
+    private void listarAutoresVivosEnAnio() {
+        System.out.println("Ingrese el año para buscar autores vivos:");
+        int anio = sc.nextInt();
+        sc.nextLine(); // Consumir el salto de línea pendiente
+
+        // Llamar al servicio para obtener autores vivos en el año especificado
+        List<Autor> autores = autorService.encontrarAutoresVivosEnAnio(anio);
+
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores vivos en el año " + anio);
+        } else {
+            System.out.println("Autores vivos en el año " + anio + ":");
+            autores.forEach(autor -> {
+                System.out.println(autor);
+                // Puedes listar los libros del autor si tienes la relación correctamente mapeada en Autor
+                if (autor.getLibros() != null && !autor.getLibros().isEmpty()) {
+                    autor.getLibros().forEach(libro -> System.out.println("- "+libro.getTitulo()));
+                }
+                System.out.println("------------------------------");
+            });
         }
     }
 }

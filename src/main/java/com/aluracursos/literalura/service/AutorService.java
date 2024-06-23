@@ -29,5 +29,9 @@ public class AutorService {
         autores.forEach(autor -> autor.getLibros().size()); // Forzar inicialización de la colección
         return autores;
     }
+
+    public List<Autor> encontrarAutoresVivosEnAnio(int anio) {
+        return autorRepository.findByFechaNacimientoLessThanEqualAndFechaMuerteGreaterThanEqual(anio, anio);
+    }
 }
 
