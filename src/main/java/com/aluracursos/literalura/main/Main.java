@@ -35,6 +35,7 @@ public class Main {
                     Bienvenido a LiterAlura
                     1 - Agregar un libro a favoritos
                     2 - Listar los libros guardados como favoritos
+                    3 - Listar autores de libros favoritos
 
                     0 - Salir
                     ****************************
@@ -55,6 +56,9 @@ public class Main {
                     break;
                 case 2:
                     listarYMostrarLibros();
+                    break;
+                case 3:
+                    listarAutoresConLibros();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -154,4 +158,28 @@ public class Main {
             libros.forEach(System.out::println);
         }
     }
+
+    public void listarAutoresConLibros() {
+        List<Autor> autores = autorService.listarAutoresConLibros();
+
+        if (autores.isEmpty()) {
+            System.out.println("No se encontraron autores en la base de datos.");
+        } else {
+            System.out.println("Listado de autores y sus libros:\n");
+            for (Autor autor : autores) {
+                System.out.println(autor);
+                if (!autor.getLibros().isEmpty()) {
+                    for (Libro libro : autor.getLibros()) {
+                        System.out.println("- " + libro.getTitulo());
+                    }
+                    System.out.println("------------------------------");
+                } else {
+                    System.out.println("\tNo tiene libros registrados.");
+                }
+                System.out.println(); // Separador entre autores
+            }
+        }
+    }
+
+
 }

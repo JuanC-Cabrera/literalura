@@ -28,7 +28,6 @@ public class Libro {
     @Override
     public String toString() {
         return String.format("""
-                                ------------------------------
                                 Id: %s
                                 ------------------------------
                                 Título: %s

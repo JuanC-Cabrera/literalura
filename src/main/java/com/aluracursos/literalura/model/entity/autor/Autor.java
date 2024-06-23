@@ -23,7 +23,7 @@ public class Autor {
     private int fechaNacimiento;
     private int fechaMuerte;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Libro> libros;
 
     public Autor(String nombre, Integer fechaNacimiento, Integer fechaMuerte) {
@@ -34,12 +34,16 @@ public class Autor {
 
     @Override
     public String toString() {
-        return "Autor{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", fechaMuerte=" + fechaMuerte +
-                '}';
+        return String.format("""
+                               
+                                Id: %s
+                                ------------------------------
+                                Nombre: %s
+                                Fecha de nacimiento: %s
+                                Fecha de fallecimiento: %s
+                                
+                                Libros:""",
+                id,nombre, fechaNacimiento, fechaMuerte);
     }
 }
 
