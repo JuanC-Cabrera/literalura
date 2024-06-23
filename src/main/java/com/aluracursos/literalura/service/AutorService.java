@@ -20,8 +20,5 @@ public class AutorService {
         autorRepository.save(autor);
     }
 
-    public boolean existeAutorPorNombre(String nombre) {
-        return autorRepository.existsByNombre(nombre);
-    }
 }
 

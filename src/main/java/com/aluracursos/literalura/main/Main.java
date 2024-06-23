@@ -4,31 +4,24 @@ import com.aluracursos.literalura.model.dto.DatosAutores;
 import com.aluracursos.literalura.model.dto.DatosBusqueda;
 import com.aluracursos.literalura.model.dto.DatosLibro;
 import com.aluracursos.literalura.model.entity.autor.Autor;
-import com.aluracursos.literalura.model.entity.autor.AutorRepository;
 import com.aluracursos.literalura.model.entity.libro.Libro;
-import com.aluracursos.literalura.model.entity.libro.LibroRepository;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.conversor.ConvierteDatos;
 import com.aluracursos.literalura.service.LibroService;
 import com.aluracursos.literalura.service.AutorService;
 
 import java.util.InputMismatchException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
     protected Scanner sc = new Scanner(System.in);
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     private final ConvierteDatos conversor = new ConvierteDatos();
-    private final AutorRepository autorRepository;
-    private final LibroRepository libroRepository;
     private final LibroService libroService;
     private final AutorService autorService;
 
     // Constructor para inyectar los servicios de libro y autor
-    public Main(AutorRepository autorRepository, LibroRepository libroRepository, LibroService libroService, AutorService autorService) {
-        this.autorRepository = autorRepository;
-        this.libroRepository=libroRepository;
+    public Main(LibroService libroService, AutorService autorService) {
         this.libroService = libroService;
         this.autorService = autorService;
     }
@@ -122,7 +115,7 @@ public class Main {
         Libro libro = new Libro();
         libro.setTitulo(datosLibro.titulo());
         libro.setAutor(autor);
-        libro.setIdioma(datosLibro.idiomas().isEmpty() ? "" : datosLibro.idiomas().get(0));
+        libro.setIdioma(datosLibro.idiomas().isEmpty() ? "" : datosLibro.idiomas().getFirst());
         libro.setNumeroDescargas(datosLibro.numeroDescarga());
 
         return libro;
@@ -138,6 +131,7 @@ public class Main {
 
         // Si no existe, crear uno nuevo y guardarlo
         if (autor == null) {
+            assert datosAutor != null;
             autor = new Autor(datosAutor.nombre(), datosAutor.fechaNacimiento(), datosAutor.fechaMuerte());
             autorService.guardarAutor(autor);
         }
