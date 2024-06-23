@@ -24,15 +24,21 @@ public class Libro {
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
+
     @Override
     public String toString() {
-        return "Libro{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", idioma='" + idioma + '\'' +
-                ", numeroDescargas=" + numeroDescargas +
-                ", autor=" + autor.getNombre()+
-                '}';
+        return String.format("""
+                                ------------------------------
+                                Id: %s
+                                ------------------------------
+                                Título: %s
+                                Idioma: %s
+                                Numero de descargas: %s
+                                
+                                Autor: %s
+                                ------------------------------
+                                """,
+                id,titulo, idioma, numeroDescargas, autor.getNombre());
     }
 
 }

@@ -11,6 +11,7 @@ import com.aluracursos.literalura.service.LibroService;
 import com.aluracursos.literalura.service.AutorService;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -33,6 +34,7 @@ public class Main {
                     ****************************
                     Bienvenido a LiterAlura
                     1 - Agregar un libro a favoritos
+                    2 - Listar los libros guardados como favoritos
 
                     0 - Salir
                     ****************************
@@ -50,6 +52,9 @@ public class Main {
             switch (opcion) {
                 case 1:
                     buscarLibroAPI();
+                    break;
+                case 2:
+                    listarYMostrarLibros();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -137,5 +142,16 @@ public class Main {
         }
 
         return autor;
+    }
+
+    public void listarYMostrarLibros() {
+        List<Libro> libros = libroService.listarLibros();
+
+        if (libros.isEmpty()) {
+            System.out.println("No se encontraron libros en la base de datos.");
+        } else {
+            System.out.println("Listado de libros guardados como favoritos:");
+            libros.forEach(System.out::println);
+        }
     }
 }
